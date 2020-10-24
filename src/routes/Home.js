@@ -8,13 +8,22 @@ class Home extends React.Component {
         movies: [],
     };
 
-    getMovies = async () => {        
+    getMovies = async () => {
+        /*        
         const {
             data: { movies },            
         } = await fetch('https://yts-proxy.now.sh/list_movies.json?sort_by=rating')
                 .then(response => response.json())
 
-        this.setState({ movies, isLoading: false });        
+        this.setState({ movies, isLoading: false });
+        */
+       await fetch('https://yts-proxy.now.sh/list_movies.json?sort_by=rating')
+            .then(response => response.json())
+            .then(json => {
+                const movies = json.data.movies;
+                console.log(movies);
+                this.setState({ movies, isLoading: false });
+            });        
     }
 
     componentDidMount() {
@@ -39,6 +48,7 @@ class Home extends React.Component {
                                 summary={movie.summary}
                                 poster={movie.medium_cover_image}
                                 genres={movie.genres}
+                                rating={movie.rating}
                             /> 
                         )}    
                     </div>
